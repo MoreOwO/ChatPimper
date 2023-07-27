@@ -3,17 +3,17 @@
 	"id": "chat-pimper",
 	"version": "${version}",
 	"name": "Chat Pimper",
-	"description": "This is an example description! Tell everyone what your mod is about!",
+	"description": "Just a mod to make using colors in chat and sending message a lot easier, mostly on servers with colored message support.",
 	"authors": [
 		"MoréOwO"
 	],
 	"contact": {
 		"homepage": "https://fabricmc.net/",
-		"sources": "https://github.com/FabricMC/fabric-example-mod"
+		"sources": "https://github.com/MoreOwO/ChatPimper"
 	},
-	"license": "CC0-1.0",
+	"license": "CC-BY-SA 4.0",
 	"icon": "assets/chat-pimper/icon.png",
-	"environment": "*",
+	"environment": "client",
 	"entrypoints": {
 		"main": [
 			{
@@ -42,7 +42,7 @@
 		"minecraft": ">=1.19.4",
 		"java": ">=17",
 		"fabric-api": "*",
-		"fabric-language-kotlin": ">=1.9.0",
-		"yet_another_config_lib_v3": "3.1.0+1.20"
+		"fabric-language-kotlin": ">=1.8.10",
+		"yet_another_config_lib_v3": "*"
 	}
 }
