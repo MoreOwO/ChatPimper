@@ -1,0 +1,19 @@
+{
+    "config.param.useAmpersandAsColorCharacter": "Use ampersand (&) as color character instead of section",
+    "config.category.global": "Global",
+    "config.group.messages": "Message settings",
+    "config.param.messages.prefix": "Message prefix",
+    "config.param.messages.suffix": "Message suffix",
+    "config.param.gradient.toggle": "Toggle gradient",
+    "config.param.gradient.enableWithCommand": "Use a command to color your message",
+    "config.param.gradient.enableCommand": "The command that enables gradient",
+    "config.group.gradient": "Gradient settings",
+    "config.param.gradient.colorStart": "Gradient start color",
+    "config.param.gradient.colorEnd": "Gradient end color",
+    "config.param.gradient.chatColorFormat": "Chat color format to use",
+    "error.message.tooLong": "The message is too long (more than 256 characters)",
+    "config.title": "Config for Chat Pimper",
+    "config.enum.chatColorFormat.ampersand": "Ampersand (&#rrggbb)",
+    "config.enum.chatColorFormat.ampersand_legacy": "Ampersand legacy (&x&r&r&b&b&g&g)",
+    "config.enum.chatColorFormat.section": "Section §"
+}

@@ -1,0 +1,14 @@
+{
+    "required": true,
+    "package": "app.moreo.chatpimper.mixin.client",
+    "compatibilityLevel": "JAVA_17",
+    "client": [
+        "ChatMessageC2SPacketAccessors",
+        "ChatSendMixin",
+        "ClientPlayNetworkHandlerAccessors",
+        "MaxLengthOverrider"
+    ],
+    "injectors": {
+        "defaultRequire": 1
+    }
+}

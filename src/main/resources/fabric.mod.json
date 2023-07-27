@@ -1,0 +1,48 @@
+{
+	"schemaVersion": 1,
+	"id": "chat-pimper",
+	"version": "${version}",
+	"name": "Chat Pimper",
+	"description": "This is an example description! Tell everyone what your mod is about!",
+	"authors": [
+		"MoréOwO"
+	],
+	"contact": {
+		"homepage": "https://fabricmc.net/",
+		"sources": "https://github.com/FabricMC/fabric-example-mod"
+	},
+	"license": "CC0-1.0",
+	"icon": "assets/chat-pimper/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			{
+				"value": "app.moreo.chatpimper.ChatPimperMod",
+				"adapter": "kotlin"
+			}
+		],
+		"client": [
+			{
+				"value": "app.moreo.chatpimper.ChatPimperClientMod",
+				"adapter": "kotlin"
+			}
+		],
+		"modmenu": [
+			"app.moreo.chatpimper.ModMenuIntegration"
+		]
+	},
+	"mixins": [
+		{
+			"config": "chat-pimper.client.mixins.json",
+			"environment": "client"
+		}
+	],
+	"depends": {
+		"fabricloader": ">=0.14.21",
+		"minecraft": ">=1.19.4",
+		"java": ">=17",
+		"fabric-api": "*",
+		"fabric-language-kotlin": ">=1.9.0",
+		"yet_another_config_lib_v3": "3.1.0+1.20"
+	}
+}
