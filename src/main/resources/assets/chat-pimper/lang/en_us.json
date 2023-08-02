@@ -15,5 +15,10 @@
     "config.title": "Config for Chat Pimper",
     "config.enum.chatColorFormat.ampersand": "Ampersand (&#rrggbb)",
     "config.enum.chatColorFormat.ampersand_legacy": "Ampersand legacy (&x&r&r&b&b&g&g)",
-    "config.enum.chatColorFormat.section": "Section §"
+    "config.enum.chatColorFormat.section": "Section",
+    "config.param.messages.split": "Split messages if they are too long",
+    "config.param.messages.split.desc": "Split messages if they are more than 256 characters long.",
+    "config.param.messages.split.desc.warning": "Be careful as it could be considered spamming on certain servers.",
+    "config.category.bounded.commands": "Key bound commands",
+    "config.param.bounded.commands.list": "List of key bounded commands"
 }

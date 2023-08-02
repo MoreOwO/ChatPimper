@@ -30,6 +30,7 @@ class Config {
                         .registerTypeHierarchyAdapter(Style::class.java, Style.Serializer())
                         .registerTypeHierarchyAdapter(Color::class.java, GsonConfigInstance.ColorTypeAdapter())
                         .registerTypeHierarchyAdapter(SRGBColor::class.java, SRGBSerializer())
+                        .registerTypeHierarchyAdapter(KeyBoundCommand::class.java, KeyBoundCommand.Serializer())
                         .serializeNulls()
                         .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
                 )
@@ -61,4 +62,6 @@ class Config {
     @ConfigEntry var colorGradientEnd: SRGBColor = SRGBColor(1f, 1f, 1f)
     @ConfigEntry var colorGradientFormat: ChatColorFormat = ChatColorFormat.AMPERSAND
     @ConfigEntry var useCommandToEnable: Boolean = true
+    @ConfigEntry var splitMessages: Boolean = false
+    @ConfigEntry var boundedCommands: MutableList<KeyBoundCommand> = mutableListOf()
 }

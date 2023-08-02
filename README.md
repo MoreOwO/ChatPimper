@@ -1,4 +1,4 @@
-[![Modrinth Downloads](https://img.shields.io/modrinth/dt/chat-pimper?style=for-the-badge)](https://modrinth.com/mod/chat-pimper)
+[![Modrinth Downloads](https://img.shields.io/modrinth/dt/chat-pimper?style=for-the-badge&logo=modrinth)](https://modrinth.com/mod/chat-pimper)
 
 So, you want to color your messages on a server supporting it. But uuh, it's annoying to remember to prefix all your messages with &d when you want pink. And I'm not talking about gradients.
 

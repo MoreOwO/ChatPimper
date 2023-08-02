@@ -68,8 +68,7 @@ dependencies {
 	// modImplementation "net.fabricmc.fabric-api:fabric-api-deprecated:${project.fabric_version}"
     modApi "com.terraformersmc:modmenu:6.2.1"
 
-	modImplementation shadow(include("app.moreo:ultimate-color-library-minecraft:0.0.10-alpha-SNAPSHOT"))
-	modImplementation shadow(include("app.moreo:ultimate-color-library-serialization:0.0.10-alpha-SNAPSHOT"))
+	modImplementation(include("app.moreo:ultimate-color-library-minecraft:0.0.10-alpha-SNAPSHOT"))
 }
 
 processResources {
@@ -100,11 +99,16 @@ java {
 	targetCompatibility = JavaVersion.VERSION_17
 }
 
+remapJar {
+	archiveClassifier.set("mod")
+}
 
 jar {
 	from("LICENSE") {
 		rename { "${it}_${project.base.archivesName.get()}"}
 	}
+
+	archiveClassifier.set("dev")
 }
 
 
@@ -126,18 +130,15 @@ publishing {
 	}
 }
 
-remapJar {
-	from(project.configurations.shadow.collect { zipTree(it) })
-	dependsOn shadowJar
-	duplicatesStrategy = DuplicatesStrategy.INCLUDE
-}
-
 shadowJar {
 	configurations = [project.configurations.shadow]
 
 	include "**"
 	dependsOn jar
-	archiveClassifier.set("dev")
+}
+
+tasks.runClient {
+
 }
 
 
