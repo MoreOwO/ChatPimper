@@ -5,6 +5,8 @@ import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents
 import net.minecraft.client.MinecraftClient
 import net.minecraft.client.util.InputUtil
+import net.minecraft.text.Style
+import net.minecraft.text.Text
 
 object ChatPimperClientMod : ClientModInitializer {
 
@@ -16,6 +18,7 @@ object ChatPimperClientMod : ClientModInitializer {
 			config.config.boundedCommands.forEach { command ->
 				if (InputUtil.isKeyPressed(MinecraftClient.getInstance().window.handle, command.key) && !consumedKeys.contains(command.key)) {
 					client.networkHandler?.sendChatCommand(command.command)
+					client.player?.sendMessage(Text.literal("Executing /${command.command}...").setStyle(Style.EMPTY.withBold(true).withItalic(true).withColor(0xffff00)))
 					consumedKeys.add(command.key)
 				}
 

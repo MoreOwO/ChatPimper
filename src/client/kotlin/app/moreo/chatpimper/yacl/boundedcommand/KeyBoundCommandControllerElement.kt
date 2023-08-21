@@ -48,11 +48,12 @@ class KeyBoundCommandControllerElement(control: KeyBoundCommandController, scree
 
         val keyBindText = if (inputFieldKeyPressMode) Text.literal("[ ").setStyle(redishStyle).append(localizedKeyText).append(Text.literal(" ]").setStyle(redishStyle)) else localizedKeyText
 
-        val textX = getXLimit() - textRenderer.getWidth(valueText) + renderOffset - xPadding
+        val textX = dimension.xLimit() - textRenderer.getWidth(valueText) + renderOffset - xPadding
+
         graphics.enableScissor(
-            inputFieldBounds.x(),
+            getCorrectedX(),
             inputFieldBounds.y() - 2,
-            getXLimit() + 1,
+            dimension.xLimit() + 1,
             inputFieldBounds.yLimit() + 4
         )
 
@@ -64,16 +65,17 @@ class KeyBoundCommandControllerElement(control: KeyBoundCommandController, scree
             ticks += delta
             val text = getValueText().string
             graphics.fill(
-                inputFieldBounds.x(),
+                textX,
                 inputFieldBounds.yLimit(),
-                getXLimit(),
+                dimension.xLimit() - xPadding,
                 inputFieldBounds.yLimit() + 1,
                 -1
             )
+
             graphics.fill(
-                inputFieldBounds.x() + 1,
+                textX + 1,
                 inputFieldBounds.yLimit() + 1,
-                getXLimit() + 1,
+                dimension.xLimit() + 1 - xPadding,
                 inputFieldBounds.yLimit() + 2,
                 -0xbfbfc0
             )
@@ -107,13 +109,22 @@ class KeyBoundCommandControllerElement(control: KeyBoundCommandController, scree
         return mouseX < dimension.x() + dimension.width() / 2
     }
 
-    private fun getXLimit(): Int {
+    private fun getCorrectedX(): Int {
         val localizedKeyText = if (key == InputUtil.UNKNOWN_KEY.code) InputUtil.UNKNOWN_KEY.localizedText else InputUtil.fromKeyCode(key, 1).localizedText
 
         val keyBindText = if (inputFieldKeyPressMode) Text.literal("[ ").setStyle(redishStyle).append(localizedKeyText).append(Text.literal(" ]").setStyle(redishStyle)) else localizedKeyText
 
-        return dimension.xLimit()
+        return dimension.x() + (xPadding * 2) + textRenderer.getWidth(keyBindText)
     }
+
+    private fun getKeyBindWidth(): Int {
+        val localizedKeyText = if (key == InputUtil.UNKNOWN_KEY.code) InputUtil.UNKNOWN_KEY.localizedText else InputUtil.fromKeyCode(key, 1).localizedText
+
+        val keyBindText = if (inputFieldKeyPressMode) Text.literal("[ ").setStyle(redishStyle).append(localizedKeyText).append(Text.literal(" ]").setStyle(redishStyle)) else localizedKeyText
+
+        return textRenderer.getWidth(keyBindText) + (xPadding)
+    }
+
 
     override fun mouseClicked(mouseX: Double, mouseY: Double, button: Int): Boolean {
         if (isAvailable && dimension.isPointInside(mouseX.toInt(), mouseY.toInt()) && !mouseOverLeftHalf(mouseX.toInt(), mouseY.toInt())) {
@@ -122,13 +133,12 @@ class KeyBoundCommandControllerElement(control: KeyBoundCommandController, scree
                 caretPos = getDefaultCaretPos()
             } else {
                 // gets the appropriate caret position for where you click
-                val textX = mouseX.toInt() - (getXLimit() - textRenderer.getWidth(getValueText()))
                 var pos = -1
                 var currentWidth = 0
                 for (ch in inputField.toCharArray()) {
                     pos++
                     val charLength = textRenderer.getWidth(ch.toString())
-                    if (currentWidth + charLength / 2 > textX) { // if more than halfway past the characters select in front of that char
+                    if (currentWidth + charLength / 2 > getCorrectedX()) { // if more than halfway past the characters select in front of that char
                         caretPos = pos
                         break
                     } else if (pos == inputField.length - 1) {
@@ -273,9 +283,10 @@ class KeyBoundCommandControllerElement(control: KeyBoundCommandController, scree
             renderOffset = 0
             return
         }
-        val textX = getXLimit() - textRenderer.getWidth(inputField) - xPadding
+        val textX = dimension.xLimit() - textRenderer.getWidth(inputField) - xPadding
         val caretX = textX + textRenderer.getWidth(inputField.substring(0, caretPos)) - 1
-        val minX = getXLimit() - xPadding - getUnshiftedLength()
+
+        val minX = dimension.xLimit() - xPadding - getUnshiftedLength()
         val maxX = minX + getUnshiftedLength()
         if (caretX + renderOffset < minX) {
             renderOffset = minX - caretX
@@ -354,11 +365,11 @@ class KeyBoundCommandControllerElement(control: KeyBoundCommandController, scree
     }
 
     private fun getUnshiftedLength(): Int {
-        return if (optionNameString.isEmpty()) dimension.width() - xPadding * 2 else dimension.width() / 8 * 5
+        return if (optionNameString.isEmpty()) dimension.width() - getKeyBindWidth() - xPadding * 2 else dimension.width() / 8 * 5
     }
 
     private fun getMaxUnwrapLength(): Int {
-        return if (optionNameString.isEmpty()) dimension.width() - xPadding * 2 else dimension.width() / 2
+        return if (optionNameString.isEmpty()) (dimension.width() - (xPadding * 2) - getKeyBindWidth()) else dimension.width() / 2
     }
 
     private fun getSelectionStart(): Int {
@@ -406,7 +417,7 @@ class KeyBoundCommandControllerElement(control: KeyBoundCommandController, scree
             max(6.0, min(textRenderer.getWidth(getValueText()).toDouble(), getUnshiftedLength().toDouble()))
                 .toInt()
         inputFieldBounds = Dimension.ofInt(
-            getXLimit() - xPadding - width,
+            dimension.xLimit() - xPadding - width ,
             dim.centerY() - textRenderer.fontHeight / 2,
             width,
             textRenderer.fontHeight
